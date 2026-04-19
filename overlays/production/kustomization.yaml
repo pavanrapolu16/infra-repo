@@ -6,8 +6,8 @@ patches:
   - path: patch-ingress-host.yaml
 images:
   - name: docker.io/your-dockerhub-username/ai-task-backend
-    newTag: prod-latest
+    newTag: 2a837ea69cf23cc8f420cd5825c5f390bdc54b81
   - name: docker.io/your-dockerhub-username/ai-task-worker
-    newTag: prod-latest
+    newTag: 2a837ea69cf23cc8f420cd5825c5f390bdc54b81
   - name: docker.io/your-dockerhub-username/ai-task-frontend
-    newTag: prod-latest
+    newTag: 2a837ea69cf23cc8f420cd5825c5f390bdc54b81
