@@ -6,8 +6,8 @@ patches:
   - path: patch-ingress-host.yaml
 images:
   - name: docker.io/pavanrapolu16/ai-task-backend
-    newTag: staging-latest
+    newTag: latest
   - name: docker.io/pavanrapolu16/ai-task-worker
-    newTag: staging-latest
+    newTag: latest
   - name: docker.io/pavanrapolu16/ai-task-frontend
-    newTag: staging-latest
+    newTag: latest
