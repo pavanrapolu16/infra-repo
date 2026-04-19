@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
     namespace: ai-task-platform
   source:
-    repoURL: https://github.com/your-org/ai-task-platform-infra.git
+    repoURL: https://github.com/pavanrapolu16/infra-repo
     targetRevision: main
     path: overlays/staging
   syncPolicy:
