@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: docker.io/your-dockerhub-username/ai-task-backend:latest
+          image: docker.io/pavanrapolu16/ai-task-backend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 5000

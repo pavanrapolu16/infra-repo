@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: docker.io/your-dockerhub-username/ai-task-frontend:latest
+          image: docker.io/pavanrapolu16/ai-task-frontend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
