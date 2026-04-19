@@ -1,0 +1,8 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ai-task-ingress
+  namespace: ai-task-platform
+spec:
+  rules:
+    - host: ai-task.example.com

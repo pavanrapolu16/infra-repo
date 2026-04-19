@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: ai-task-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: worker
+  template:
+    metadata:
+      labels:
+        app: worker
+    spec:
+      containers:
+        - name: worker
+          image: docker.io/your-dockerhub-username/ai-task-worker:latest
+          imagePullPolicy: Always
+          env:
+            - name: MONGO_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: ai-task-config
+                  key: MONGO_URI
+            - name: MONGO_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: ai-task-config
+                  key: MONGO_DB_NAME
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: ai-task-config
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: ai-task-config
+                  key: REDIS_PORT
+            - name: REDIS_QUEUE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: ai-task-config
+                  key: REDIS_QUEUE_NAME
+            - name: MAX_RETRIES
+              valueFrom:
+                configMapKeyRef:
+                  name: ai-task-config
+                  key: MAX_RETRIES
+            - name: POLL_TIMEOUT_SECONDS
+              valueFrom:
+                configMapKeyRef:
+                  name: ai-task-config
+                  key: POLL_TIMEOUT_SECONDS
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          livenessProbe:
+            exec:
+              command: ["sh", "-c", "pgrep -f 'python main.py' >/dev/null"]
+            initialDelaySeconds: 20
+            periodSeconds: 15
+          readinessProbe:
+            exec:
+              command: ["sh", "-c", "pgrep -f 'python main.py' >/dev/null"]
+            initialDelaySeconds: 10
+            periodSeconds: 10
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: worker-hpa
+  namespace: ai-task-platform
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: worker
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 65
